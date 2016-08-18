@@ -38,7 +38,8 @@
     // @see : https://github.com/toopay/bootstrap-markdown/issues/109
     var opts = ['autofocus', 'savable', 'hideable', 'width',
       'height', 'resize', 'iconlibrary', 'language',
-      'footer', 'fullscreen', 'hiddenButtons', 'disabledButtons'
+      'footer', 'fullscreen', 'hiddenButtons', 'disabledButtons',
+      'ignoreActionsIfNoTextSelected'
     ];
     $.each(opts, function(_, opt) {
       if (typeof $(element).data(opt) !== 'undefined') {
@@ -970,6 +971,7 @@
     parser: null,
     dropZoneOptions: null,
     enableDropDataUri: false,
+    ignoreActionsIfNoTextSelected: false,
 
     /* Buttons Properties */
     buttons: [
@@ -989,6 +991,10 @@
             // Give/remove ** surround the selection
             var chunk, cursor, selected = e.getSelection(),
               content = e.getContent();
+
+            if (e.$options.ignoreActionsIfNoTextSelected && selected.length === 0) {
+              return;
+            }
 
             if (selected.length === 0) {
               // Give extra word
@@ -1025,6 +1031,10 @@
             // Give/remove * surround the selection
             var chunk, cursor, selected = e.getSelection(),
               content = e.getContent();
+
+            if (e.$options.ignoreActionsIfNoTextSelected && selected.length === 0) {
+              return;
+            }
 
             if (selected.length === 0) {
               // Give extra word
